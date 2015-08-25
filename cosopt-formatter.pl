@@ -102,10 +102,13 @@ sub write_cosopt_input {
 
     open my $gene_id_fh, ">", join( "/", $data_dir, "GeneID.DAT" );
     open my $cosopt_L_fh, ">", join( "/", $outdir, "cosoptL.in" );
+    open my $cosopt_2L_fh, ">", join( "/", $outdir, "cosopt2L.in" );
 
     say $cosopt_L_fh join( ",", $$period_limits{'min'}, $$period_limits{'max'},
         $$period_limits{'increment'} );
     say $cosopt_L_fh "n";
+
+    say $cosopt_2L_fh "session.op2";
 
     for my $gene_id ( sort { "\L$a" cmp "\L$b" } keys %$expression_data ) {
         $gene_count++;
@@ -115,6 +118,8 @@ sub write_cosopt_input {
 
         say $cosopt_L_fh "data\\$gene_count_padded.DAT";
         say $cosopt_L_fh "opt\\$gene_count_padded.OPT";
+
+        say $cosopt_2L_fh "opt\\$gene_count_padded.OPT";
 
         open my $dat_fh, ">", join( "/", $data_dir, "$gene_count_padded.DAT" );
         for my $timepoint ( sort { $a <=> $b } keys %{$$expression_data{$gene_id}} ) {
@@ -126,4 +131,5 @@ sub write_cosopt_input {
     }
     close $gene_id_fh;
     close $cosopt_L_fh;
+    close $cosopt_2L_fh;
 }
