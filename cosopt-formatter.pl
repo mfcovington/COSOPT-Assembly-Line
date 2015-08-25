@@ -87,10 +87,13 @@ sub write_cosopt_input {
 
     my $gene_count = 0;
 
+    open my $gene_id_fh, ">", join( "/", $data_dir, "GeneID.DAT" );
+
     for my $gene_id ( sort { "\L$a" cmp "\L$b" } keys %$expression_data ) {
         $gene_count++;
 
         my $gene_count_padded = sprintf( "%08d", $gene_count );
+        say $gene_id_fh "File $gene_count_padded=$gene_id";
 
         open my $dat_fh, ">", join( "/", $data_dir, "$gene_count_padded.DAT" );
         for my $timepoint ( sort { $a <=> $b } keys %{$$expression_data{$gene_id}} ) {
@@ -100,4 +103,5 @@ sub write_cosopt_input {
         }
         close $dat_fh;
     }
+    close $gene_id_fh;
 }
