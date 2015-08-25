@@ -15,14 +15,27 @@ use List::Util 'sum';
 
 my $outdir = 'Session';
 
+my $period_min = 20;
+my $period_max = 28;
+my $period_inc = 0.1;
+
 my $options = GetOptions (
-    "outdir=s" => \$outdir,
+    "outdir=s"     => \$outdir,
+    "period_min=i" => \$period_min,
+    "period_max=i" => \$period_max,
+    "period_inc=f" => \$period_inc,
 );
 
 my @file_list = @ARGV;
 
 my $data_dir = join "/", $outdir, "data";
 make_path $data_dir;
+
+my $period_limits = {
+    'min'       => $period_min,
+    'max'       => $period_max,
+    'increment' => $period_inc,
+};
 
 my $expression_data = {};
 
@@ -32,7 +45,7 @@ for my $file (@file_list) {
 
 process_data($expression_data);
 
-write_cosopt_input($expression_data);
+write_cosopt_input($expression_data, $period_limits);
 
 
 
@@ -83,17 +96,25 @@ sub calc_mean_and_se {
 }
 
 sub write_cosopt_input {
-    my $expression_data = shift;
+    my ( $expression_data, $period_limits ) = @_;
 
     my $gene_count = 0;
 
     open my $gene_id_fh, ">", join( "/", $data_dir, "GeneID.DAT" );
+    open my $cosopt_L_fh, ">", join( "/", $outdir, "cosoptL.in" );
+
+    say $cosopt_L_fh join( ",", $$period_limits{'min'}, $$period_limits{'max'},
+        $$period_limits{'increment'} );
+    say $cosopt_L_fh "n";
 
     for my $gene_id ( sort { "\L$a" cmp "\L$b" } keys %$expression_data ) {
         $gene_count++;
 
         my $gene_count_padded = sprintf( "%08d", $gene_count );
         say $gene_id_fh "File $gene_count_padded=$gene_id";
+
+        say $cosopt_L_fh "data\\$gene_count_padded.DAT";
+        say $cosopt_L_fh "opt\\$gene_count_padded.OPT";
 
         open my $dat_fh, ">", join( "/", $data_dir, "$gene_count_padded.DAT" );
         for my $timepoint ( sort { $a <=> $b } keys %{$$expression_data{$gene_id}} ) {
@@ -104,4 +125,5 @@ sub write_cosopt_input {
         close $dat_fh;
     }
     close $gene_id_fh;
+    close $cosopt_L_fh;
 }
