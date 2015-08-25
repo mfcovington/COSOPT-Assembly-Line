@@ -99,13 +99,15 @@ sub write_cosopt_input {
     my ( $expression_data, $period_limits ) = @_;
 
     my $gene_count = 0;
+    my $period_min = $$period_limits{'min'};
+    my $period_max = $$period_limits{'max'};
+    my $period_inc = $$period_limits{'increment'};
 
     open my $gene_id_fh, ">", join( "/", $data_dir, "GeneID.DAT" );
     open my $cosopt_L_fh, ">", join( "/", $outdir, "cosoptL.in" );
     open my $cosopt_2L_fh, ">", join( "/", $outdir, "cosopt2L.in" );
 
-    say $cosopt_L_fh join( ",", $$period_limits{'min'}, $$period_limits{'max'},
-        $$period_limits{'increment'} );
+    say $cosopt_L_fh join( ",", $period_min, $period_max, $period_inc );
     say $cosopt_L_fh "n";
 
     say $cosopt_2L_fh "session.op2";
