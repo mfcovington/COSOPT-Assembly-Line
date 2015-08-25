@@ -32,8 +32,8 @@ my $data_dir = join "/", $outdir, "data";
 make_path $data_dir;
 
 my $period_limits = {
-    'min'       => $period_min,
-    'max'       => $period_max,
+    'min'       => "$period_min.",
+    'max'       => "$period_max.",
     'increment' => $period_inc,
 };
 
