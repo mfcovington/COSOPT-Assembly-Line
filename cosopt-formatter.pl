@@ -108,6 +108,7 @@ sub write_cosopt_input {
     open my $cosopt_2L_fh, ">", join( "/", $outdir, "cosopt2L.in" );
     open my $cosopt_3_fh, ">", join( "/", $outdir, "cosopt3.in" );
     open my $cosopt_4_fh, ">", join( "/", $outdir, "cosopt4.in" );
+    open my $bat_fh, ">", join( "/", $outdir, "doit.bat" );
 
     say $cosopt_L_fh join( ",", $period_min, $period_max, $period_inc );
     say $cosopt_L_fh "n";
@@ -119,8 +120,16 @@ sub write_cosopt_input {
 
     say $cosopt_4_fh join( "\n", "session.op3", "session.op4" );
 
+    say $bat_fh <<'EOF';
+..\programs\cosoptL.new < cosoptL.in
+..\programs\cosopt2L.new < cosopt2L.in
+..\programs\cosopt3.new < cosopt3.in
+..\programs\cosopt4.new < cosopt4.in
+EOF
+
     close $cosopt_3_fh;
     close $cosopt_4_fh;
+    close $bat_fh;
 
     for my $gene_id ( sort { "\L$a" cmp "\L$b" } keys %$expression_data ) {
         $gene_count++;
