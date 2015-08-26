@@ -103,7 +103,7 @@ sub write_cosopt_input {
     my $period_max = $$period_limits{'max'};
     my $period_inc = $$period_limits{'increment'};
 
-    open my $gene_id_fh, ">", join( "/", $data_dir, "GeneID.DAT" );
+    open my $gene_id_fh, ">", join( "/", $outdir, "GeneID.DAT" );
     open my $cosopt_L_fh, ">", join( "/", $outdir, "cosoptL.in" );
     open my $cosopt_2L_fh, ">", join( "/", $outdir, "cosopt2L.in" );
     open my $cosopt_3_fh, ">", join( "/", $outdir, "cosopt3.in" );
