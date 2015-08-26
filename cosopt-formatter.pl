@@ -30,6 +30,7 @@ my @file_list = @ARGV;
 
 my $data_dir = join "/", $outdir, "data";
 make_path $data_dir;
+make_path join "/", $outdir, "opt";
 
 my $period_limits = {
     'min'       => "$period_min.",
