@@ -61,7 +61,7 @@ sub get_expression_data {
     while (<$expression_fh>) {
         chomp;
         my ( $gene_id, @counts ) = split;
-        for my $i ( 1..$#timepoints ) {
+        for my $i ( 0..$#timepoints ) {
             push @{$$expression_data{$gene_id}{$timepoints[$i]}}, $counts[$i];
         }
     }
