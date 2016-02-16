@@ -1,9 +1,15 @@
 # COSOPT Assembly Line
 
+The COSOPT Assembly Line does the following:
+
+- Converts expression data into COSOPT input files
+- Runs COSOPT
+- Converts COSOPT output into a more user-friendly format
+
 
 ## COSOPT Requires Wine or Windows
 
-Although COSOPT was written to run on Microsoft Windows, it can be run on OS X, Linux, etc. using [Wine](https://wiki.winehq.org/Main_Page). To install Wine on OS X, I recommend [David Baumgold's Wine installation tutorial](http://www.davidbaumgold.com/tutorials/wine-mac/).
+Although [COSOPT was written by Marty Straume](http://www.ncbi.nlm.nih.gov/pubmed/15063650) to run on Microsoft Windows, it can be run on OS X, Linux, etc. using [Wine](https://wiki.winehq.org/Main_Page). To install Wine on OS X, I recommend [David Baumgold's Wine installation tutorial](http://www.davidbaumgold.com/tutorials/wine-mac/).
 
 
 ## Input File Format
