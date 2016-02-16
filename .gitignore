@@ -1,0 +1,8 @@
+Session/
+data/
+opt/
+session.*
+*.DAT
+*.bat
+*.in
+*.xlsx
