@@ -122,7 +122,7 @@ sub write_cosopt_input {
 
     say $cosopt_4_fh join( "\n", "session.op3", "session.op4" );
 
-    my $cosopt_dir = "$Bin/programs";
+    my $cosopt_dir = "$Bin/../cosopt";
     $cosopt_dir =~ s|/|\\|g;
 
     say $bat_fh <<EOF;
