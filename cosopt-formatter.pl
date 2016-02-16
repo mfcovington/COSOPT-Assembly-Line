@@ -9,6 +9,7 @@ use warnings;
 use autodie;
 use feature 'say';
 use File::Path 'make_path';
+use FindBin '$Bin';
 use Getopt::Long;
 use List::MoreUtils 'zip';
 use List::Util 'sum';
@@ -121,11 +122,14 @@ sub write_cosopt_input {
 
     say $cosopt_4_fh join( "\n", "session.op3", "session.op4" );
 
-    say $bat_fh <<'EOF';
-..\programs\cosoptL.new < cosoptL.in
-..\programs\cosopt2L.new < cosopt2L.in
-..\programs\cosopt3.new < cosopt3.in
-..\programs\cosopt4.new < cosopt4.in
+    my $cosopt_dir = "$Bin/programs";
+    $cosopt_dir =~ s|/|\\|g;
+
+    say $bat_fh <<EOF;
+$cosopt_dir\\cosoptL.new < cosoptL.in
+$cosopt_dir\\cosopt2L.new < cosopt2L.in
+$cosopt_dir\\cosopt3.new < cosopt3.in
+$cosopt_dir\\cosopt4.new < cosopt4.in
 EOF
 
     close $cosopt_3_fh;
