@@ -22,15 +22,22 @@ The input file for COSOPT Assembly Line should be tab-delimited and have gene ex
 To get the COSOPT Assembly Line up and running, set the parameters and run the following code on the command line.
 
 ```sh
+# When setting these variables, do not use blank spaces (e.g., OUT_DIR=my-output-directory)
 OUT_DIR=          # Path to the output directory
 COUNT_FILE_IN=    # Path to the tab-delimited counts file to be used for input
-COSOPT_OUT_FILE=  # Output path and filename (will be tab-delimted)
-BIN_DIR=          # Path to 'COSOPT-Assembly-Line/bin/'
+COSOPT_OUT_FILE=  # Output path and filename (will be tab-delimited)
+BIN_DIR=          # Path to 'cosopt-formatter.pl' (e.g., BIN_DIR=COSOPT-Assembly-Line/bin)
 
 $BIN_DIR/cosopt-formatter.pl -o $OUT_DIR $COUNT_FILE_IN
 cd $OUT_DIR
 wine cmd /c doit.bat > cosopt.log 2> cosopt.err
 $BIN_DIR/cosopt-deformatter.pl session.op4 $COSOPT_OUT_FILE
+```
+
+For improved reproducibility and workflow documentation, you can save the above (with variables defined) to a file and run the commands directly from that file in the command line using `source`. For example: 
+
+```sh
+source my-cosopt-run.2016-02-23
 ```
 
 *Note: COSOPT is not the fastest program; on my laptop, it took me nearly 6 hours to analyze data from 42,128 genes with 23 timepoints in triplicate.*
